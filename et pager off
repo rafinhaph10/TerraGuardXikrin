@@ -1,0 +1,25 @@
+                                          Table "public.areas"
+    Column     |            Type             | Collation | Nullable |              Default              
+---------------+-----------------------------+-----------+----------+-----------------------------------
+ id            | integer                     |           | not null | nextval('areas_id_seq'::regclass)
+ nome          | character varying(200)      |           | not null | 
+ descricao     | text                        |           |          | 
+ tipo          | character varying(50)       |           |          | 
+ data_cadastro | timestamp without time zone |           |          | CURRENT_TIMESTAMP
+ geometry      | geometry(MultiPolygon,4326) |           |          | 
+ area_ha       | double precision            |           |          | 
+ perimetro_m   | double precision            |           |          | 
+ centroide     | geometry(Point,4326)        |           |          | 
+ buffer_10km   | geometry(MultiPolygon,4326) |           |          | 
+ buffer_20km   | geometry(MultiPolygon,4326) |           |          | 
+ bbox          | geometry(Polygon,4326)      |           |          | 
+Indexes:
+    "areas_pkey" PRIMARY KEY, btree (id)
+    "idx_areas_bbox" gist (bbox)
+    "idx_areas_buffer10" gist (buffer_10km)
+    "idx_areas_buffer20" gist (buffer_20km)
+    "idx_areas_centroide" gist (centroide)
+    "idx_areas_geometry" gist (geometry)
+Referenced by:
+    TABLE "alertas" CONSTRAINT "alertas_area_id_fkey" FOREIGN KEY (area_id) REFERENCES areas(id)
+
